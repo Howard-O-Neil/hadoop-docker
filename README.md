@@ -1,2 +1,4 @@
 # hadoop-docker
-Hadoop worker node base on debian image, amd/64
+Support latest fully functional neovim, vim.plug, coc.nvim LSP
+
+Based on debian 64bit, openjdk8.0
