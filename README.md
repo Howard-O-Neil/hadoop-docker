@@ -1,2 +1,2 @@
 # hadoop-docker
-hadoop with docker implemented
+Hadoop worker node base on debian image
