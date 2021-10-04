@@ -1,18 +1,30 @@
 FROM openjdk:8-jdk-slim
 
 RUN apt update
-RUN apt install -y sed wget curl lua5.3 make g++
+RUN apt install -y sed wget curl lua5.3 make g++ git 
 RUN wget -qO - https://archive.apache.org/dist/hadoop/core/hadoop-3.3.1/hadoop-3.3.1.tar.gz \
     | tar -xzv -C /usr/local/
 RUN wget -qO - https://github.com/neovim/neovim/releases/download/v0.5.1/nvim-linux64.tar.gz \
     | tar -xzv -C /usr/local/
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+RUN wget -qO - https://starship.rs/install.sh | bash -s -- -y
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-COPY init.vim ~/.config/nvim/
-RUN /usr/local/nvim-linux64/bin/nvim --headless +PlugInstall +qall
+ENV NVM_DIR="/root/.nvm"
+RUN sh -c '. /root/.nvm/nvm.sh && nvm install node'
+
+COPY init.vim /root/.config/nvim/
+WORKDIR /root/.config/nvim
+RUN echo '\033[0;32mThis is just neovim SYNTAX ERROR, please skip this error\033[0m' \
+    && /usr/local/nvim-linux64/bin/nvim --headless +PlugInstall +qall
+
+COPY debian.bashrc /root/
+WORKDIR /root
+RUN cat ~/debian.bashrc > ~/.bashrc
+
+WORKDIR /
+
 RUN update-alternatives --install /usr/bin/nvim nvim /usr/local/nvim-linux64/bin/nvim 1000
 RUN update-alternatives --set nvim /usr/local/nvim-linux64/bin/nvim
 
@@ -22,23 +34,19 @@ RUN update-alternatives --set vi /usr/local/nvim-linux64/bin/nvim
 RUN update-alternatives --install /usr/bin/vim vim /usr/local/nvim-linux64/bin/nvim 1000
 RUN update-alternatives --set vim /usr/local/nvim-linux64/bin/nvim
 
-RUN echo "export PATH=$PATH:/usr/local/hadoop-3.3.1/bin" >> ~/.bashrc
-RUN echo "export PATH=$PATH:/usr/local/hadoop-3.3.1/sbin" >> ~/.bashrc
-RUN echo "export PATH=$PATH:/usr/local/nvim-linux64/bin" >> ~/.bashrc
+RUN echo 'export PATH=$PATH:/usr/local/hadoop-3.3.1/bin' >> ~/.bashrc
+RUN echo 'export PATH=$PATH:/usr/local/hadoop-3.3.1/sbin' >> ~/.bashrc
+RUN echo 'export PATH=$PATH:/usr/local/nvim-linux64/bin' >> ~/.bashrc
 
-RUN echo "export NVM_DIR=$HOME/.nvm" >> ~/.bashrc
-RUN echo "[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"" >> ~/.bashrc
-RUN echo "[ -s \"$NVM_DIR/bash_completion\" ] && \. \"$NVM_DIR/bash_completion\"" >> ~/.bashrc
-RUN echo "eval \"$(starship init bash)\""
-
-RUN sed "s/# export LS_OPTIONS='--color=auto'/export LS_OPTIONS='--color=auto'/g" ~/.bashrc
-RUN sed "s/# alias ls='ls $LS_OPTIONS'/alias ls='ls $LS_OPTIONS'/g" ~/.bashrc
-RUN sed "s/# alias ll='ls $LS_OPTIONS -l'/alias ll='ls $LS_OPTIONS -l'/g" ~/.bashrc
-RUN sed "s/# alias l='ls $LS_OPTIONS -lA'/alias l='ls $LS_OPTIONS -lA'/g" ~/.bashrc
+RUN echo 'export NVM_DIR=$HOME/.nvm' >> ~/.bashrc
+RUN echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+RUN echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
+RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
 RUN mkdir -p /etc/hadoop
 RUN mv /usr/local/hadoop-3.3.1/etc/* /etc/hadoop/
 RUN rm -rf /usr/local/hadoop-3.3.1/etc
 RUN ln -s /etc /usr/local/hadoop-3.3.1/etc
 
-RUN sed "s/#  JAVA_HOME=/usr/java/testing hdfs dfs -ls/JAVA_HOME=/usr/local/openjdk-8/g"
+
+ENTRYPOINT [ "/bin/bash" ]

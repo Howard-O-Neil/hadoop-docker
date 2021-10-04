@@ -22,7 +22,6 @@ nnoremap <C-h> 10zh
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 Plug 'tpope/vim-commentary'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'mkitt/tabline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
