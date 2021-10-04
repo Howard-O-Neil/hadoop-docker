@@ -10,6 +10,7 @@ Based on debian 64bit, openjdk8.0
 Updated system + apt
 
 Support latest fully functional
++ starship prompt
 + neovim
 + vim.plug
 + coc.nvim
