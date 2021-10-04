@@ -21,3 +21,5 @@ Tend to make the image slimmer but still functional
 ---
 
 > :warning: **Make sure to build hadoop_base and push to your repository, then change other workernode dockerfile base image**
+
+> :bulb: **Use `docker-compose run -Td <service>` to keep container run with bash entrypoint**
