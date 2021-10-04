@@ -3,7 +3,7 @@ A fully distributed hadoop implmented with docker
 
 Each worker node will be ran in seperated container
 
-All cluster settings will be mount as volume. Edit config + autoreload container
+All cluster settings + data will be mount as volume. Edit config + autoreload container
 ## hadoop base version 3.0
 Based on debian 64bit, openjdk8.0
 
