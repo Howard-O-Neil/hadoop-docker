@@ -1,27 +1,17 @@
 version: "3.9"
 
 services:
-  namenode-1-ha1:
-    image: mingkhoi/hadoop-base:version1.0
-    entrypoint: ["bash"]
+  namenode-1:
+    build:
+      context: ./single_namenode
+      dockerfile: dockerfile
     ports:
       - "8020:8020"
       - "8021:8021"
+    volumes:
+      - ./single_namenode/etc:/etc/hadoop
+      - ./single_namenode/metadata:/metadata
+      - ./single_namenode/data:/data
     environment:
       - "TERM=xterm-256color"
 
-  namenode-2-ha1:
-    image: mingkhoi/hadoop-base:version1.0
-    entrypoint: ["bash"]
-    ports:
-      - "8022:8020"
-      - "8023:8021"
-    environment:
-      - "TERM=xterm-256color"
-
-volumes:
-  shared-metadata-ha1:
-    driver_opts:
-      type: "nfs"
-      device: "/virtual/data/docker/shared-metadata-ha1"
-      o: "addr=128.0.0.2"        
