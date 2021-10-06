@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  namenode-1:
+    build:
+      context: ./single_namenode
+      dockerfile: dockerfile
+    ports:
+      - "8020:8020"
+      - "8021:8021"
+    volumes:
+      - ./single_namenode/etc:/etc/hadoop
+      - ./single_namenode/metadata:/metadata
+      - ./single_namenode/data:/data
+    environment:
+      - "TERM=xterm-256color"
+
