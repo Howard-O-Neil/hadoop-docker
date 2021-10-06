@@ -1,6 +1,16 @@
 FROM mingkhoi/hadoop-base:version3.0
 
+ENV HDFS_NAMENODE_USER=root
+ENV HDFS_DATANODE_USER=root
+ENV HDFS_SECONDARYNAMENODE_USER=root
+
 RUN rm -rf /etc/hadoop
+
+RUN chmod 600 /etc/ssh/ssh_host* # default key host on machine
+
+COPY startup.sh /
+WORKDIR /
+RUN chmod 700 startup.sh
 
 RUN mkdir -p /metadata/dfs1/nn
 RUN mkdir -p /metadata/dfs2/nn
@@ -11,19 +21,9 @@ RUN mkdir -p /data/dfs2/nn
 RUN mkdir -p /data/dfs3/nn
 RUN mkdir -p /data/dfs4/nn
 
-ENV HDFS_NAMENODE_USER=root
-ENV HDFS_DATANODE_USER=root
-ENV HDFS_SECONDARYNAMENODE_USER=root
-
 RUN mkdir ~/.ssh
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 RUN cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-RUN chmod 0600 ~/.ssh/authorized_keys
-
-RUN chmod 0600 /etc/ssh/ssh_host* # for default host key
-
-COPY startup.sh /
-WORKDIR /
-RUN chmod +x startup.sh
+RUN chmod 600 ~/.ssh/authorized_keys
 
 ENTRYPOINT [ "/startup.sh" ]
