@@ -20,4 +20,10 @@ RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 RUN cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 RUN chmod 0600 ~/.ssh/authorized_keys
 
-ENTRYPOINT [ "/bin/bash" ]
+RUN chmod 0600 /etc/ssh/ssh_host* # for default host key
+
+COPY startup.sh /
+WORKDIR /
+RUN chmod +x startup.sh
+
+ENTRYPOINT [ "/startup.sh" ]
