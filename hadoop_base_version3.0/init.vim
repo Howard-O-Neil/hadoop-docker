@@ -12,16 +12,20 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
+set shell=/usr/bin/zsh
 set guicursor=i:block
-nnoremap <C-j> 10<C-e>
-nnoremap <C-k> 10<C-y>
-nnoremap <C-l> 10zl
-nnoremap <C-h> 10zh
-
+set mouse=a
+nnoremap <C-j> 10j
+nnoremap <C-k> 10k
+" nnoremap <C-l> 10zl
+" nnoremap <C-h> 10zh
+nnoremap <C-l> 10l
+nnoremap <C-h> 10h
 
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 Plug 'tpope/vim-commentary'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'mkitt/tabline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
@@ -34,8 +38,20 @@ Plug 'schickling/vim-bufonly'
 Plug 'itchyny/lightline.vim'
 Plug 'sheerun/vim-polyglot'
 
+call plug#end()
+
 " ========== CUSTOM ========== 
 "
+function! ClipboardYank()
+  call system('xclip -i -selection clipboard', @@)
+endfunction
+function! ClipboardPaste()
+  let @@ = system('xclip -o -selection clipboard')
+endfunction
+
+vnoremap <silent> y y:call ClipboardYank()<cr>
+vnoremap <silent> d d:call ClipboardYank()<cr>
+nnoremap <silent> p :call ClipboardPaste()<cr>p
 
 " " Copy to clipboard
 " vnoremap  <leader>y  "*y
@@ -55,7 +71,10 @@ nnoremap fg <cmd>Telescope live_grep<cr>
 nnoremap fb <cmd>Telescope buffers<cr>
 nnoremap fh <cmd>Telescope help_tags<cr>
 
+nnoremap cs :noh <cr>
+
 " Add your own mapping. For example:
+"
 " let g:NetrwIsOpen=0
 
 " function! ToggleNetrw()
@@ -79,10 +98,8 @@ nnoremap fh <cmd>Telescope help_tags<cr>
 
 " golang
 
-call plug#end()
-
 colorscheme gruvbox 
-" hi Normal ctermbg=Black
+hi Normal guibg=NONE ctermbg=NONE
 
 " ========== COC ==========
 
@@ -144,7 +161,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> g <Plug>(coc-type-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 

@@ -1,7 +1,10 @@
-FROM openjdk:8-jdk-slim
+FROM ubuntu:bionic@sha256:fc0d6af5ab38dab33aa53643c4c4b312c6cd1f044c1a2229b2743b252b9689fc
 
 RUN apt update
-RUN apt install -y sed wget curl lua5.3 make g++ git ssh 
+RUN apt install -y java-common wget curl make g++ git
+
+RUN wget -O ~/amazon-corretto-8.deb https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.deb
+RUN dpkg -i ~/amazon-corretto-8.deb
 RUN wget -qO - https://archive.apache.org/dist/hadoop/core/hadoop-3.3.1/hadoop-3.3.1.tar.gz \
     | tar -xzv -C /usr/local/
 RUN wget -qO - https://github.com/neovim/neovim/releases/download/v0.5.1/nvim-linux64.tar.gz \
@@ -10,6 +13,8 @@ RUN wget -qO - https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh |
 RUN wget -qO - https://starship.rs/install.sh | bash -s -- -y
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+RUN apt install -y openjdk-8-jre python3.8 sed lua5.3 ssh # further install without redownload hadoop
 
 ENV NVM_DIR=/root/.nvm
 RUN sh  -c '. /root/.nvm/nvm.sh && nvm install node'
@@ -37,6 +42,7 @@ RUN update-alternatives --set vim /usr/local/nvim-linux64/bin/nvim
 ENV PATH=${PATH}:/usr/local/hadoop-3.3.1/bin
 ENV PATH=${PATH}:/usr/local/hadoop-3.3.1/sbin
 ENV PATH=${PATH}:/usr/local/nvim-linux64/bin
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto
 
 RUN echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
 RUN echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
@@ -46,6 +52,5 @@ RUN mkdir -p /etc/hadoop
 RUN mv /usr/local/hadoop-3.3.1/etc/* /etc/hadoop/
 RUN rm -rf /usr/local/hadoop-3.3.1/etc
 RUN ln -s /etc /usr/local/hadoop-3.3.1/etc
-
 
 ENTRYPOINT [ "/bin/bash" ]
