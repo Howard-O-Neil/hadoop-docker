@@ -5,7 +5,7 @@ Each worker node will be ran in seperated container
 
 All cluster settings + data will be mount as volume. Edit config + autoreload container
 ## hadoop base version 3.0
-Based on debian amd64, openjdk8.0
+Based on ubuntu binic amd64, amazon corretto 8
 
 Updated system + apt
 
@@ -15,6 +15,7 @@ Support latest fully functional
 + vim.plug
 + coc.nvim
 + nvm + nodejs
++ python3
 ## further hadoop base
 Tend to make the image slimmer but still functional
 
