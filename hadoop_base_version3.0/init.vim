@@ -82,7 +82,7 @@ nnoremap fh <cmd>Telescope help_tags<cr>
 call plug#end()
 
 colorscheme gruvbox 
-" hi Normal ctermbg=Black
+hi Normal guibg=NONE ctermbg=NONE
 
 " ========== COC ==========
 

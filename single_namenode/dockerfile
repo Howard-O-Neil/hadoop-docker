@@ -1,4 +1,6 @@
-FROM mingkhoi/hadoop-base:version3.0
+FROM mingkhoi/hadoop-base:version4.0
+
+RUN echo 'root:123' | chpasswd
 
 ENV HDFS_NAMENODE_USER=root
 ENV HDFS_DATANODE_USER=root
@@ -21,9 +23,19 @@ RUN mkdir -p /data/dfs2/nn
 RUN mkdir -p /data/dfs3/nn
 RUN mkdir -p /data/dfs4/nn
 
+RUN mkdir -p /metadata/dfs1/snn
+RUN mkdir -p /metadata/dfs2/snn
+RUN mkdir -p /metadata/dfs3/snn
+
+RUN mkdir -p /metadata/dfs1/temp/edits
+RUN mkdir -p /metadata/dfs2/temp/edits
+RUN mkdir -p /metadata/dfs3/temp/edits
+
+RUN mkdir -p ~/src
+
 RUN mkdir ~/.ssh
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 RUN cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-RUN chmod 600 ~/.ssh/authorized_keys
+RUN chmod 0600 ~/.ssh/authorized_keys
 
 ENTRYPOINT [ "/startup.sh" ]
