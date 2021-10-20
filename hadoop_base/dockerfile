@@ -48,8 +48,7 @@ RUN echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
 RUN echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
-RUN mkdir -p /etc/hadoop
-RUN mv /usr/local/hadoop-3.3.1/etc/* /etc/hadoop/
+RUN mv /usr/local/hadoop-3.3.1/etc/* /etc/
 RUN rm -rf /usr/local/hadoop-3.3.1/etc
 RUN ln -s /etc /usr/local/hadoop-3.3.1/etc
 
