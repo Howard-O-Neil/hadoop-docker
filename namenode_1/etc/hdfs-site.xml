@@ -22,7 +22,24 @@
         <value>file:///metadata/dfs1/nn,file:///metadata/dfs2/nn,file:///metadata/dfs3/nn</value>
     </property>
     <property>
-        <name>dfs.datanode.data.dir</name> 
+        <name>dfs.replication</name>
+        <value>3</value>
+        <final>true</final>
+    </property>
+    <property>
+        <name>dfs.namenode.checkpoint.dir</name>
+        <value>file:///metadata/dfs1/snn,file:///metadata/dfs2/snn,file:///metadata/dfs3/snn</value>
+    </property>
+    <property>
+        <name>dfs.namenode.checkpoint.edits.dir</name>
+        <value>file:///metadata/dfs1/temp/edits,file:///metadata/dfs2/temp/edits,file:///metadata/dfs3/temp/edits</value>
+    </property>
+    <property>
+        <name>dfs.namenode.checkpoint.period</name>
+        <value>3600s</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
         <value>file:///data/dfs1/nn,file:///data/dfs2/nn,file:///data/dfs3/nn,file:///data/dfs4/nn,</value>
     </property>
     <property>

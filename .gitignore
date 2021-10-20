@@ -1,2 +1,4 @@
 **/metadata
 **/data
+**/*.class
+**/*.jar
