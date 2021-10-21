@@ -11,10 +11,10 @@ services:
       - "8020:8020"
       - "8021:8021"
     volumes:
-      - ./namenode_1/etc:/etc/hadoop:rw
-      - ./namenode_1/metadata:/metadata:rw
-      - ./namenode_1/data:/data:rw
-      - ./namenode_1/src:/root/src:rw
+      - ./namenode/namenode_1/etc:/etc/hadoop:rw
+      - ./namenode/namenode_1/metadata:/metadata:rw
+      - ./namenode/namenode_1/data:/data:rw
+      - ./namenode/namenode_1/src:/root/src:rw
     networks:
       hadoop-server:
         ipv4_address: 128.0.0.2
@@ -30,10 +30,10 @@ services:
       - "8022:8020"
       - "8023:8021"
     volumes:
-      - ./namenode_2/etc:/etc/hadoop:rw
-      - ./namenode_2/metadata:/metadata:rw
-      - ./namenode_2/data:/data:rw
-      - ./namenode_2/src:/root/src:rw
+      - ./namenode/namenode_2/etc:/etc/hadoop:rw
+      - ./namenode/namenode_2/metadata:/metadata:rw
+      - ./namenode/namenode_2/data:/data:rw
+      - ./namenode/namenode_2/src:/root/src:rw
     networks:
       hadoop-server:
         ipv4_address: 128.0.0.3
