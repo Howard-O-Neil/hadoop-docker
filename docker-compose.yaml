@@ -3,18 +3,19 @@ version: "3.9"
 services:
   namenode-1:
     build:
-      context: ./namenode_1
+      context: ./namenode-img
       dockerfile: dockerfile
     depends_on:
       - nfs-server
+    tty: false
     ports:
       - "8020:8020"
       - "8021:8021"
     volumes:
-      - ./namenode/namenode_1/etc:/etc/hadoop:rw
-      - ./namenode/namenode_1/metadata:/metadata:rw
-      - ./namenode/namenode_1/data:/data:rw
-      - ./namenode/namenode_1/src:/root/src:rw
+      - ./namenode-data/nn1/etc:/etc/hadoop:rw
+      - ./namenode-data/nn1/metadata:/metadata:rw
+      - ./namenode-data/nn1/data:/data:rw
+      - ./namenode-data/nn1/src:/root/src:rw
     networks:
       hadoop-server:
         ipv4_address: 128.0.0.2
@@ -22,18 +23,19 @@ services:
       - "TERM=xterm-256color"
   namenode-2:
     build:
-      context: ./namenode_2
+      context: ./namenode-img
       dockerfile: dockerfile
     depends_on:
       - nfs-server
+    tty: false
     ports:
       - "8022:8020"
       - "8023:8021"
     volumes:
-      - ./namenode/namenode_2/etc:/etc/hadoop:rw
-      - ./namenode/namenode_2/metadata:/metadata:rw
-      - ./namenode/namenode_2/data:/data:rw
-      - ./namenode/namenode_2/src:/root/src:rw
+      - ./namenode-data/nn2/etc:/etc/hadoop:rw
+      - ./namenode-data/nn2/metadata:/metadata:rw
+      - ./namenode-data/nn2/data:/data:rw
+      - ./namenode-data/nn2/src:/root/src:rw
     networks:
       hadoop-server:
         ipv4_address: 128.0.0.3
@@ -43,7 +45,7 @@ services:
   nfs-server:
     build:
       context: ./docker-nfs-server
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "2049:2049"
     cap_add:
