@@ -24,3 +24,8 @@ Tend to make the image slimmer but still functional
 > :warning: **Make sure to build hadoop_base and push to your repository, then change other workernode dockerfile base image**
 
 > :bulb: **Use `docker-compose run -d <service>` to keep container run in background**
+
+<br>
+
+## Credits
+NFS Server: https://github.com/sjiveson/nfs-server-alpine
