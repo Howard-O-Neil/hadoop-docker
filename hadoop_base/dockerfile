@@ -14,10 +14,11 @@ RUN wget -qO - https://starship.rs/install.sh | bash -s -- -y
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-RUN apt install -y openjdk-8-jre python3.8 sed lua5.3 ssh # further install without redownload hadoop
+RUN apt install -y openjdk-8-jre python3.8 sed lua5.3 ssh nginx # further install without redownload hadoop
 
 ENV NVM_DIR=/root/.nvm
 RUN sh  -c '. /root/.nvm/nvm.sh && nvm install node'
+RUN npm install -g live-server
 
 COPY init.vim /root/.config/nvim/
 WORKDIR /root/.config/nvim

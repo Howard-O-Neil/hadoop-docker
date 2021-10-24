@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   namenode-1:
+    container_name: namenode-1
     build:
       context: ./namenode-img
       dockerfile: dockerfile
@@ -22,6 +23,7 @@ services:
     environment:
       - "TERM=xterm-256color"
   namenode-2:
+    container_name: namenode-2
     build:
       context: ./namenode-img
       dockerfile: dockerfile
