@@ -18,7 +18,7 @@ RUN apt install -y openjdk-8-jre python3.8 sed lua5.3 ssh nginx # further instal
 
 ENV NVM_DIR=/root/.nvm
 RUN sh  -c '. /root/.nvm/nvm.sh && nvm install node'
-RUN npm install -g live-server
+RUN sh -c '. /root/.nvm/nvm.sh && npm install -g live-server'
 
 COPY init.vim /root/.config/nvim/
 WORKDIR /root/.config/nvim
