@@ -30,9 +30,6 @@ services:
     depends_on:
       - nfs-server
     tty: false
-    ports:
-      - "8022:8020"
-      - "8023:8021"
     volumes:
       - ./namenode-data/nn2/etc:/etc/hadoop:rw
       - ./namenode-data/nn2/metadata:/metadata:rw
@@ -44,19 +41,41 @@ services:
 
     environment:
       - "TERM=xterm-256color"
+  namenode-3:
+    container_name: namenode-3
+    build:
+      context: ./namenode-img
+      dockerfile: dockerfile
+    # depends_on:
+    #   - nfs-server
+    tty: false
+    volumes:
+      - ./namenode-data/nn3/etc:/etc/hadoop:rw
+      - ./namenode-data/nn3/metadata:/metadata:rw
+      - ./namenode-data/nn3/data:/data:rw
+      - ./namenode-data/nn3/src:/root/src:rw
+    networks:
+      hadoop-server:
+        ipv4_address: 128.0.0.4
+
+    environment:
+      - "TERM=xterm-256color"
   nfs-server:
     build:
       context: ./docker-nfs-server
       dockerfile: dockerfile
     ports:
-      - "2049:2049"
-    cap_add:
-      - SYS_ADMIN
-      - SETPCAP
+      - "2045:2049"
+    # cap_add:
+    #   - CAP_SYS_ADMIN
+    #   - CAP_SETPCAP
+    privileged: true
     environment:
       - SHARED_DIRECTORY=/data/share
+      - SHARED_DIRECTORY_2=/data/backup_1  
     volumes:
       - ./nfs_share/data:/data/share
+      - ./nfs_share/backup_1:/data/backup_1
     networks:
       hadoop-server:
         ipv4_address: 128.0.0.254

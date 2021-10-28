@@ -22,38 +22,6 @@
         <value>file:///metadata/dfs1/nn,file:///metadata/dfs2/nn,file:///metadata/dfs3/nn</value>
     </property>
     <property>
-        <name>dfs.nameservices</name>
-        <value>ha-cluster-experiment001</value>
-    </property>
-    <property>
-        <name>dfs.ha.namenodes.ha-cluster-experiment001</name>
-        <value>nn2,nn3</value>
-    </property>
-    <property>
-        <name>dfs.namenode.rpc-address.ha-cluster-experiment001.nn2</name>
-        <value>128.0.0.3:8020</value>
-    </property>
-    <property>
-        <name>dfs.namenode.rpc-address.ha-cluster-experiment001.nn3</name>
-        <value>128.0.0.4:8020</value>
-    </property>
-    <property>
-        <name>dfs.namenode.https-address.ha-cluster-experiment001.nn2</name>
-        <value>128.0.0.3:80</value>
-    </property>
-    <property>
-        <name>dfs.namenode.https-address.ha-cluster-experiment001.nn3</name>
-        <value>128.0.0.3:80</value>
-    </property>
-    <property>
-        <name>dfs.namenode.http-address.ha-cluster-experiment001.nn2</name>
-        <value>128.0.0.3:443</value>
-    </property>
-    <property>
-        <name>dfs.namenode.http-address.ha-cluster-experiment001.nn3</name>
-        <value>128.0.0.3:443</value>
-    </property>
-    <property>
         <name>dfs.replication</name>
         <value>3</value>
         <final>true</final>
