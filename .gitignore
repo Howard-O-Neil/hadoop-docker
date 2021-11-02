@@ -1,4 +1,9 @@
 **/metadata
 **/data
 **/*.class
+**/target
+**/build
+**/dist
+**/logs
+**/node_modules
 **/*.jar
