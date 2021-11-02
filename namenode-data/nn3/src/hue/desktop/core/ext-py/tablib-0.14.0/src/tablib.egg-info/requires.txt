@@ -1,0 +1,10 @@
+odfpy
+openpyxl>=2.4.0
+markuppy
+pyyaml
+
+[:python_version < "3.0"]
+backports.csv
+
+[pandas]
+pandas
