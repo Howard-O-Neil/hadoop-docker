@@ -89,9 +89,7 @@ services:
     
   hadoop-spark:
     container_name: hadoop-spark
-    build:
-      context: ./namenode-img
-      dockerfile: dockerfile
+    image: mingkhoi/hadoop-spark:version1.0
     # depends_on:
     #   - nfs-server
     tty: false
